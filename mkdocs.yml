@@ -1,2 +1,32 @@
 site_name: Notes
-theme: readthedocs
+# theme: readthedocs
+
+# Configuration, https://squidfunk.github.io/mkdocs-material/
+theme:
+  name: 'material'
+  palette:
+    primary: 'black'
+    accent: 'indigo'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+
+
+extra_javascript:
+    - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+
+
+markdown_extensions:
+  - admonition
+  - mdx_math:
+      enable_dollar_delimiter: true  #for use of inline $..$
+  - codehilite: # https://squidfunk.github.io/mkdocs-material/extensions/codehilite/
+      linenums: true
+      guess_lang: true
+  - toc:
+      permalink: true
+
+nav:
+  - 简介: 'index.md'
+  - golang笔记:
+    - '入门': 'golang笔记/入门.md'
