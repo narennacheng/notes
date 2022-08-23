@@ -1,4 +1,6 @@
 site_name: Notes
+repo_name: 'notes'
+# repo_url: 'https://github.com/narennacheng/notes'
 # theme: readthedocs
 
 # Configuration, https://squidfunk.github.io/mkdocs-material/
