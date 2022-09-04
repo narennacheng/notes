@@ -22,9 +22,9 @@ markdown_extensions:
   - admonition
   - mdx_math:
       enable_dollar_delimiter: true  #for use of inline $..$
-  - codehilite: # https://squidfunk.github.io/mkdocs-material/extensions/codehilite/
-      linenums: true
-      guess_lang: true
+#  - codehilite: # https://squidfunk.github.io/mkdocs-material/extensions/codehilite/
+#      linenums: true
+#      guess_lang: true
   - toc:
       permalink: true
 
@@ -32,3 +32,7 @@ nav:
   - 简介: 'index.md'
   - golang笔记:
     - '入门': 'golang笔记/入门.md'
+  - python笔记:
+    - wsgi:
+      - 'wsgi': 'python笔记/wsgi/wsgi.md'
+      - '手写一个wsgi简单服务器': 'python笔记/wsgi/写一个wsgi简单服务器.md'
