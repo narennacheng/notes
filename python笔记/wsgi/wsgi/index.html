@@ -1,0 +1,618 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.1">
+    
+    
+      
+        <title>wsgi - Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.69437709.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Notes" class="md-header__button md-logo" aria-label="Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              wsgi
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Notes" class="md-nav__button md-logo" aria-label="Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        简介
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          golang笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="golang笔记" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          golang笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../golang%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8/" class="md-nav__link">
+        入门
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          python笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="python笔记" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          python笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          wsgi
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="wsgi" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          wsgi
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        wsgi
+      </a>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%86%99%E4%B8%80%E4%B8%AAwsgi%E7%AE%80%E5%8D%95%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="md-nav__link">
+        手写一个wsgi简单服务器
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="_1">概念<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p><strong>WSGI</strong> 的全称 <strong>web server gateway interface（web服务器网关接口）</strong>，是一种规范协议，用于描述web服务器（如Nginx、uWSGI等服务器）如何与web应用程序（如Django、Flask）通信。</p>
+<p>如何实现wsgi协议？</p>
+<blockquote>
+<p>server和application的规范在<a href="https://peps.python.org/pep-3333/">PEP3333</a>中有具体描述，要实现WSGI协议，必须同时实现web server和web application，当前运行在WSGI协议之上的web框架有Flask, Django。。</p>
+</blockquote>
+<h1 id="_2"><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h1 id="uwsgi">uWSGI<a class="headerlink" href="#uwsgi" title="Permanent link">&para;</a></h1>
+<p>文档：<a href="https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html">https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html</a></p>
+<p><strong>uWSGI</strong>是一个全功能的HTTP服务器。实现了WSGI协议、uwsgi协议、http协议等。主要作用是把HTTP协议转化成语言支持的网络协议，比如把HTTP协议转化成WSGI协议，让Python可以直接使用。</p>
+<p><strong>uwsgi</strong>（全小写）是 uWSGI 用来与其他服务器通信的本机二进制协议。</p>
+<p><strong>uWSGI与与Nginx、django关系：</strong></p>
+<ul>
+<li>
+<p>Nginx：反向代理、负载均衡、缓存静态资源。</p>
+</li>
+<li>
+<p>uWSGI 通常用于与Web 服务器（例如Nginx ）一起为PythonWeb 应用程序提供服务，这些服务器为uWSGI 的本机 uwsgi 协议提供直接支持</p>
+</li>
+<li>
+<p>数据可能这样流动：brower =&gt; nginx =&gt; uWSGI =&gt; pythonWSGIModule =&gt; pythonApplication</p>
+</li>
+</ul>
+<h2 id="_3">简单使用<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>安装 <code>pip install uwsgi</code> </p>
+<p>测试：1.编写test.py，类似以下；2.启动<code>uwsgi --http :8080 --wsgi-file test.py</code></p>
+<pre><code class="language-python">def application(env, start_response):
+    start_response('200 OK', [('Content-Type','text/html')])
+    return [b&quot;Hello World&quot;]
+</code></pre>
+<p>配置文件启动：</p>
+<p>ini：<code>uwsgi --ini uwsgi.ini</code> </p>
+<p>xml: <code>uwsgi uwsgi.xml</code> </p>
+<h2 id="_4">配置选项<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>文档：<a href="https://uwsgi-docs-zh.readthedocs.io/zh_CN/latest/Options.html">https://uwsgi-docs-zh.readthedocs.io/zh_CN/latest/Options.html</a></p>
+<p>ini格式参数说明</p>
+<pre><code class="language-ini">uid=www-data # Ubuntu系统下默认用户名
+gid=www-data # Ubuntu系统下默认用户组
+project=mysite1  # 项目名
+base = /home/user1 # 项目根目录
+
+home = %(base)/Env/%(project) # 设置项目虚拟环境,Docker部署时不需要
+chdir=%(base)/%(project) # 设置工作目录
+module=%(project).wsgi:application # wsgi文件位置
+
+master=True # 主进程
+processes=2 # 同时进行的进程数，一般
+
+# 选项1, 使用unix socket与nginx通信，仅限于uwsgi和nginx在同一主机上情形
+# Nginx配置中uwsgi_pass应指向同一socket文件
+socket=/run/uwsgi/%(project).sock
+
+# 选项2，使用TCP socket与nginx通信
+# Nginx配置中uwsgi_pass应指向uWSGI服务器IP和端口
+# socket=0.0.0.0:8000 或则 socket=:8000
+
+# 选项3，使用http协议与nginx通信
+# Nginx配置中proxy_pass应指向uWSGI服务器一IP和端口
+# http=0.0.0.0:8000 
+
+# socket权限设置
+chown-socket=%(uid):www-data
+chmod-socket=664
+
+# 进程文件
+pidfile=/tmp/%(project)-master.pid
+
+# 以后台守护进程运行，并将log日志存于temp文件夹。
+daemonize=/var/log/uwsgi/%(project).log 
+
+# 服务停止时，自动移除unix socket和pid文件
+vacuum=True
+
+# 为每个工作进程设置请求数的上限。当处理的请求总数超过这个量，进程回收重启。
+max-requests=5000
+
+# 当一个请求花费的时间超过这个时间，那么这个请求都会被丢弃。
+harakiri=60
+
+#当一个请求被harakiri杀掉会，会输出一条日志
+harakiri-verbose=true
+
+# uWsgi默认的buffersize为4096，如果请求数据超过这个量会报错。这里设置为64k
+buffer-size=65536
+
+# 如果http请求体的大小超过指定的限制，打开http body缓冲，这里为64k
+post-buffering=65536
+
+#开启内存使用情况报告
+memory-report=true
+
+#设置平滑的重启（直到处理完接收到的请求）的长等待时间(秒)
+reload-mercy=10
+
+#设置工作进程使用虚拟内存超过多少MB就回收重启
+reload-on-as=1024
+</code></pre>
+<p>xml格式样例</p>
+<pre><code class="language-xml">&lt;uwsgi&gt;
+    &lt;socket&gt;:8000&lt;/socket&gt;
+    &lt;listen&gt;100&lt;/listen&gt;
+    &lt;master&gt;true&lt;/master&gt;
+    &lt;processes&gt;4&lt;/processes&gt;
+    &lt;buffer-size&gt;16384&lt;/buffer-size&gt;
+    &lt;post-buffering&gt;4096&lt;/post-buffering&gt;
+    &lt;post-buffering-bufsize&gt;16384&lt;/post-buffering-bufsize&gt;
+    &lt;max-requests&gt;1000&lt;/max-requests&gt;
+    &lt;limit-as&gt;1024&lt;/limit-as&gt;
+    &lt;reload-mercy&gt;3&lt;/reload-mercy&gt;
+    &lt;harakiri&gt;60&lt;/harakiri&gt;
+    &lt;lazy/&gt;
+    &lt;lock-engine&gt;ipcsem&lt;/lock-engine&gt;
+    &lt;log-maxsize&gt;2147483647&lt;/log-maxsize&gt;
+    &lt;log-slow&gt;500&lt;/log-slow&gt;
+    &lt;log-4xx/&gt;
+    &lt;log-5xx/&gt;
+    &lt;reload-on-as&gt;512&lt;/reload-on-as&gt;
+    &lt;reload-on-rss&gt;512&lt;/reload-on-rss&gt;
+    &lt;close-on-exec/&gt;
+    &lt;cache2&gt;name=my_site,items=10000,bitmap=1,blocksize=2000,sweep_on_full=1,lazy=1&lt;/cache2&gt;
+    &lt;cache-expire-freq&gt;6&lt;/cache-expire-freq&gt;
+    &lt;cache-blocksize&gt;2000&lt;/cache-blocksize&gt;
+    &lt;chdir&gt;/site/&lt;/chdir&gt;
+    &lt;pythonpath&gt;/site/&lt;/pythonpath&gt;
+    &lt;env&gt;DJANGO_SETTINGS_MODULE=Myapp.settings&lt;/env&gt;
+    &lt;single-interpreter&gt;true&lt;/single-interpreter&gt;
+    &lt;thunder-lock/&gt;
+    &lt;enable-threads&gt;true&lt;/enable-threads&gt;
+    &lt;wsgi-file&gt;/site/Myapp/wsgi.py&lt;/wsgi-file&gt;
+&lt;/uwsgi&gt;
+
+</code></pre>
+<h2 id="_5">部署与监控<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h3 id="nginx"><strong>与Nginx部署</strong><a class="headerlink" href="#nginx" title="Permanent link">&para;</a></h3>
+<p>uWSGI和Nginx之间有多种通信方式, unix socket，http-socket和http。Nginx的配置必需与uwsgi配置保持一致。</p>
+<p>选项1，如果你的nginx与uwsgi在同一台服务器上，优先使用本地机器的unix socket进行通信，这样速度更快。此时nginx的配置文件如下所示：</p>
+<pre><code class="language-nginx">location / {     
+    include /etc/nginx/uwsgi_params;
+    uwsgi_pass unix:/run/uwsgi/django_test1.sock;
+}
+</code></pre>
+<p>选项2，如果nginx与uwsgi不在同一台服务器上，两者使用TCP socket通信，nginx可以使用如下配置：</p>
+<pre><code class="language-nginx">location / {     
+    include /etc/nginx/uwsgi_params;
+    uwsgi_pass uWSGI_SERVER_IP:8000;
+}
+</code></pre>
+<p>选项3，如果nginx与uwsgi不在同一台服务器上，两者使用http协议进行通信，nginx配置应修改如下：</p>
+<pre><code class="language-nginx">location / {     
+    # 注意：proxy_pass后面http必不可少哦！
+    proxy_pass http://uWSGI_SERVER_IP:8000;
+}
+</code></pre>
+<h3 id="_6">监测：<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>uwsgitop： <a href="https://github.com/xrmx/uwsgitop">https://github.com/xrmx/uwsgitop</a>
+django+uwsgi：<a href="https://github.com/unbit/django-uwsgi">https://github.com/unbit/django-uwsgi</a></p>
+
+
+
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../../../golang%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 入门" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              入门
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../%E5%86%99%E4%B8%80%E4%B8%AAwsgi%E7%AE%80%E5%8D%95%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="md-footer__link md-footer__link--next" aria-label="Next: 手写一个wsgi简单服务器" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              手写一个wsgi简单服务器
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.9c69f0bc.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
